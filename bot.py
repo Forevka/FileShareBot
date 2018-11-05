@@ -31,8 +31,7 @@ async def send_add(message: types.Message):
     if len(file_name)>=3:
         files = await loop.create_task(db.find_file_by_name(file_name));
         if len(files)>0:
-            #inline_btn_1 = InlineKeyboardButton('Первая кнопка!', callback_data='button1')
-            files_kb = InlineKeyboardMarkup()#.add(inline_btn_1)
+            files_kb = InlineKeyboardMarkup()
             for i in files:
                 files_kb.add(InlineKeyboardButton(i['file_name'], callback_data=i['file_id']))
             await message.reply("Вот что нашел по твоему запросу", reply_markup=files_kb)
@@ -40,9 +39,6 @@ async def send_add(message: types.Message):
             await message.reply("Ничего не нашел :(")
     else:
         await message.reply("Минимум 3 буквы для поиска")
-    #files = await loop.create_task(db.find_file_by_name())
-    #print(files)
-    #await message.reply("Окей, сохранил твой файл к себе в базу данных!")
 
 @dp.message_handler(content_types=types.ContentType.DOCUMENT)
 async def send_add(message: types.Message):
@@ -55,7 +51,6 @@ async def send_add(message: types.Message):
 async def process_callback(callback_query: types.CallbackQuery):
     print("CALLBACK !!!",callback_query)
     await bot.answer_callback_query(callback_query.id)
-    #await bot.send_message(callback_query.chat.id, 'Нажата первая кнопка!')
     await bot.send_document(callback_query.message.chat.id, callback_query.data,
                             caption='Этот файл специально для тебя!')
 
