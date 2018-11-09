@@ -92,14 +92,15 @@ async def send_find(message: types.Message):
 
 @dp.message_handler(content_types=types.ContentType.AUDIO)
 async def get_music(message: types.Message):
+    await message.reply("Пока что не поддерживаю музыку но скоро буду 😉")
+
+@dp.message_handler(content_types=types.ContentType.DOCUMENT)
+async def get_document(message: types.Message):
     print(message)
     err = await loop.create_task(db.insert_file_id(message.document.file_name, message.document.file_id, message.from_user.id))
     if err == 1:
         await message.reply("Окей, сохранил твой файл к себе в базу данных!")
-
-@dp.message_handler(content_types=types.ContentType.DOCUMENT)
-async def get_document(message: types.Message):
-    await message.reply("Пока что не поддерживаю музыку но скоро буду 😉")
+    
 
 @dp.callback_query_handler()
 async def process_callback(callback_query: types.CallbackQuery):
