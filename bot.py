@@ -4,7 +4,8 @@ import pprint
 import db
 import ssl
 import sys
-import json
+
+from pathlib import Path
 from typing import Optional
 from aiogram.utils.exceptions import BotBlocked
 from datetime import datetime
@@ -19,6 +20,7 @@ from aiogram.types import ReplyKeyboardRemove, \
     ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.executor import start_webhook
+from aiogram.contrib.middlewares.i18n import I18nMiddleware
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -38,14 +40,20 @@ logging.basicConfig(level=logging.INFO)
 # Initialize bot and dispatcher
 loop = asyncio.get_event_loop()
 
+def _(text):
+    return text;
+
+
 greet_kb = ReplyKeyboardMarkup(resize_keyboard = True)
-greet_kb.add(KeyboardButton('🗄 Меню 🗄'))
-greet_kb.add(KeyboardButton('❓ Как пользоваться? ❓'))
-greet_kb.add(KeyboardButton('🔎 Найти файл 🔎'))
+greet_kb.add(KeyboardButton(_('🗄 Меню 🗄')))
+greet_kb.add(KeyboardButton(_('❓ Как пользоваться? ❓')))
+greet_kb.add(KeyboardButton(_('🔎 Найти файл 🔎')))
+greet_kb.add(KeyboardButton(_('Выбрать язык')))
 
 storage = MemoryStorage()
 bot = Bot(token=API_TOKEN, loop=loop)
 dp = Dispatcher(bot, storage=storage)
+
 
 class Form(StatesGroup):
     file_name = State()  # Will be represented in storage as 'Form:name'
@@ -54,10 +62,20 @@ def extract_unique_code(text):
     return text.split()[1] if len(text.split()) > 1 else None
 
 async def send_start_message(message):
-    await message.reply("Привет, я бот который поможет сохранить твои файлы", reply_markup=greet_kb)
+    await message.reply(_("Привет, я бот который поможет сохранить твои файлы"), reply_markup=greet_kb)
 
 @dp.message_handler(commands=['start'])
 async def send_start(message: types.Message):
+    user_id =  message.from_user.id
+    user_name =  message.from_user.username
+    user_locale = message.from_user.locale
+
+    user_exist = await db.find_user(user_id)
+    if user_exist==None:
+        await db.insert_user(user_id, user_name if user_name!=None else "None", user_locale)
+    else:
+        user_locale = user_exist['user_lang']
+    print(user_locale)
     if message.chat.type == "private":
         chat_id = message.chat.id
         file_id = extract_unique_code(message.text);
@@ -65,9 +83,9 @@ async def send_start(message: types.Message):
             file = await db.find_file_by_id(file_id);
             if file!=None:
                 await bot.send_document(chat_id, file['file_id'], parse_mode = "HTML", reply_markup=greet_kb,reply_to_message_id = message.message_id,
-                                    caption='Привет! Вот твой файл\n\n<b>Файл:</b> '+file['file_name']+"\n<b>Дата загрузки:</b> "+datetime.strftime(file['create_date'], "%Y.%m.%d %H:%M:%S"))
+                                    caption=_('Привет! Вот твой файл\n\n<b>Файл:</b>{file_name}\n<b>Дата загрузки:</b>{file_time}').format(file_name = file['file_name'], file_time = datetime.strftime(file['create_date'], "%Y.%m.%d %H:%M:%S")))
             else:
-                await message.reply("Не могу понять что за файл ты хочешь... Попробуй еще раз", reply_markup=greet_kb)
+                await message.reply(_("Не могу понять что за файл ты хочешь... Попробуй еще раз"), reply_markup=greet_kb)
         else:
             await send_start_message(message)
 
@@ -84,14 +102,14 @@ async def send_find(message: types.Message):
                     if n<5:
                         files_kb.add(InlineKeyboardButton(i['file_name'], callback_data="file="+i['file_id']))
                 if len(files)>5:
-                    files_kb.add(InlineKeyboardButton("Дальше >>", callback_data="next="+file_name+"="+str(5)))
-                await message.reply("Вот что нашел по твоему запросу", reply_markup=files_kb)
+                    files_kb.add(InlineKeyboardButton(_("Дальше >>"), callback_data="next="+file_name+"="+str(5)))
+                await message.reply(_("Вот что нашел по твоему запросу"), reply_markup=files_kb)
             else:
-                await message.reply("Ничего не нашел :(")
+                await message.reply(_("Ничего не нашел :("))
         else:
-            await message.reply("Минимум 3 буквы для поиска")
+            await message.reply(_("Минимум 3 буквы для поиска"))
     else:
-        await message.reply("Чтобы воспользоваться командой напиши /find имя_файла")
+        await message.reply(_("Чтобы воспользоваться командой напиши /find имя_файла"))
 
 @dp.message_handler(content_types=types.ContentType.AUDIO)
 async def get_music(message: types.Message):
@@ -102,24 +120,24 @@ async def get_document(message: types.Message):
     #print(message)
     err = await loop.create_task(db.insert_file_id(message.document.file_name, message.document.file_id, message.from_user.id))
     if err == 1:
-        await message.reply("Окей, сохранил твой файл к себе в базу данных!")
+        await message.reply(_("Окей, сохранил твой файл к себе в базу данных!"))
     
 
 @dp.callback_query_handler()
 async def process_callback(callback_query: types.CallbackQuery):
-    print(callback_query)
+    #print(callback_query)
     if callback_query.data.find("file")>=0:
         file = callback_query.data.split("=")[-1]
         file = await db.find_file_by_id(file);
-        user_id = json.loads(str(callback_query.message.reply_to_message))['from']['id'];
+        user_id = callback_query.message.reply_to_message.from_user.id;
         owner = True if file['owner_id'] == user_id else False;
         
         try:
             await bot.send_document(user_id, file['file_id'], parse_mode = "HTML",
-                                    caption='<b>Файл:</b> '+file['file_name']+"\n<b>Дата загрузки:</b> "+datetime.strftime(file['create_date'], "%Y.%m.%d %H:%M:%S"))
-            await bot.answer_callback_query(callback_query.id, text = "Отправил файл тебе в лс")
+                                    caption=_('Привет! Вот твой файл\n\n<b>Файл:</b>{file_name}\n<b>Дата загрузки:</b>{file_time}').format(file_name = file['file_name'], file_time = datetime.strftime(file['create_date'], "%Y.%m.%d %H:%M:%S")))
+            await bot.answer_callback_query(callback_query.id, text = _("Отправил файл тебе в лс"))
         except BotBlocked:
-            await bot.answer_callback_query(callback_query.id, text = "Не могу отправить тебе файл, напиши мне для начала чтоб я мог отправлять тебе файлы", show_alert = True)
+            await bot.answer_callback_query(callback_query.id, text = _("Не могу отправить тебе файл, напиши мне для начала чтоб я мог отправлять тебе файлы"), show_alert = True)
     elif callback_query.data.find("next")>=0:
         file_name = callback_query.data.split("=")[1];
         offset = callback_query.data.split("=")[2];
@@ -133,13 +151,13 @@ async def process_callback(callback_query: types.CallbackQuery):
                 if n<5:
                     files_kb.add(InlineKeyboardButton(i['file_name'], callback_data="file="+i['file_id']))
             if len(files)>5:
-                next_button = InlineKeyboardButton("Дальше >>", callback_data="next="+file_name+"="+str(int(offset)+5))
-            prev_button = InlineKeyboardButton("<< Назад", callback_data="back="+file_name+"="+str(int(offset)-5))
+                next_button = InlineKeyboardButton(_("Дальше >>"), callback_data="next="+file_name+"="+str(int(offset)+5))
+            prev_button = InlineKeyboardButton(_("<< Назад"), callback_data="back="+file_name+"="+str(int(offset)-5))
             if next_button!=None:
                 files_kb.row(prev_button, next_button)
             else:
                 files_kb.row(prev_button)
-            await bot.edit_message_text(text = "Вот что нашел по твоему запросу", chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id, reply_markup=files_kb)#message.reply("Вот что нашел по твоему запросу", reply_markup=files_kb)
+            await bot.edit_message_text(text = _("Вот что нашел по твоему запросу"), chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id, reply_markup=files_kb)#message.reply("Вот что нашел по твоему запросу", reply_markup=files_kb)
     elif callback_query.data.find("back")>=0:
         file_name = callback_query.data.split("=")[1];
         offset = callback_query.data.split("=")[2];
@@ -153,9 +171,9 @@ async def process_callback(callback_query: types.CallbackQuery):
                 if n<5:
                     files_kb.add(InlineKeyboardButton(i['file_name'], callback_data="file="+i['file_id']))
             if len(files)>5:
-                next_button = InlineKeyboardButton("Дальше >>", callback_data="next="+file_name+"="+str(int(offset)+5))
+                next_button = InlineKeyboardButton(_("Дальше >>"), callback_data="next="+file_name+"="+str(int(offset)+5))
             if int(offset)>0:
-                prev_button = InlineKeyboardButton("<< Назад", callback_data="back="+file_name+"="+str(int(offset)-5))
+                prev_button = InlineKeyboardButton(_("<< Назад"), callback_data="back="+file_name+"="+str(int(offset)-5))
             
             if prev_button!=None and next_button!=None:
                 files_kb.row(prev_button, next_button)
@@ -163,42 +181,50 @@ async def process_callback(callback_query: types.CallbackQuery):
                 files_kb.row(prev_button)
             elif next_button!=None:
                 files_kb.row(next_button)
-            await bot.edit_message_text(text = "Вот что нашел по твоему запросу", chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id, reply_markup=files_kb)
+            await bot.edit_message_text(text = _("Вот что нашел по твоему запросу"), chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id, reply_markup=files_kb)
 
 @dp.inline_handler()
 async def inline_send(inline_query: types.InlineQuery):
     if len(inline_query.query)>=3:
-        files = await db.find_file_by_name(inline_query.query);
+        offset = inline_query.offset;
+        if offset=="":
+            offset = 0;
+        files = await db.find_file_by_name(inline_query.query, offset=int(offset) if offset!="" else 0);
         if len(files)>0:
             result = [];
             for n, file in enumerate(files):
-                item = types.InlineQueryResultDocument(id = str(n), title = file['file_name'],
-                                                        document_url = file['file_id'], mime_type = "application")
-                result.append(item)
-            await bot.answer_inline_query(inline_query.id, results=result, cache_time=3)
+                if n<5:
+                    item = types.InlineQueryResultDocument(id = str(n), title = file['file_name'],
+                                                            document_url = file['file_id'], mime_type = "application")
+                    result.append(item)
+            if len(files) == 6:
+                offset = int(offset) + 5#await bot.answer_inline_query(inline_query.id, results=result, cache_time=3, next_offset=str(int(offset)+5) if offset!="" else '0')
+                await bot.answer_inline_query(inline_query.id, results=result, cache_time=3, next_offset=offset)
+            else:
+                await bot.answer_inline_query(inline_query.id, results=result, cache_time=3)
         else:
-            input_content = types.InputTextMessageContent("Немогу найти такого файла 🙄")
-            item = types.InlineQueryResultArticle(id='1', title='Немогу найти такого файла 🙄',
+            input_content = types.InputTextMessageContent(_("Немогу найти такого файла 🙄"))
+            item = types.InlineQueryResultArticle(id='1', title=_('Немогу найти такого файла 🙄'),
                                                   input_message_content=input_content)
             await bot.answer_inline_query(inline_query.id, results=[item], cache_time=60*1)
     else:
-        input_content = types.InputTextMessageContent("Введи первые 3 буквы для поиска файла")
-        item = types.InlineQueryResultArticle(id='1', title='Введи первые 3 буквы для поиска файла',
+        input_content = types.InputTextMessageContent(_("Введи первые 3 буквы для поиска файла"))
+        item = types.InlineQueryResultArticle(id='1', title=_('Введи первые 3 буквы для поиска файла'),
                                                   input_message_content=input_content)
         await bot.answer_inline_query(inline_query.id, results=[item], cache_time=60*1)
 
-@dp.message_handler(lambda message: message.text == '🗄 Меню 🗄')
+@dp.message_handler(lambda message: message.text == _('🗄 Меню 🗄'))
 async def send_menu(message: types.Message):
     await send_start_message(message);
 
-@dp.message_handler(lambda message: message.text == '❓ Как пользоваться? ❓')
+@dp.message_handler(lambda message: message.text == _('❓ Как пользоваться? ❓'))
 async def send_how_to(message: types.Message):
-    await message.reply("Отправь мне файл чтобы я смог его сохранить.\n\nПоиск по всем файлам - /find имя_файла\nТакже ты можешь искать файлы просто набрав в чате мое имя @StoreMyFileBot\nИли просто нажми кнопку <b>🔎 Найти файл 🔎</b>", parse_mode = "HTML")
+    await message.reply(_("Отправь мне файл и я сохраню его.\n\nПоиск по всем файлам - /find имя_файла\nТакже ты можешь искать файлы просто набрав в чате мое имя @StoreMyFileBot\nИли нажми кнопку <b>🔎 Найти файл 🔎</b>"), parse_mode = "HTML")
 
-@dp.message_handler(lambda message: message.text == '🔎 Найти файл 🔎')
+@dp.message_handler(lambda message: message.text == _('🔎 Найти файл 🔎'))
 async def send_search(message: types.Message):
     await Form.file_name.set()
-    await message.reply("Введи название файла или /cancel для отмены")
+    await message.reply(_("Введи название файла или /cancel для отмены"))
 
 @dp.message_handler(state=Form.file_name)
 async def process_file_name(message: types.Message, state: FSMContext):
@@ -215,12 +241,12 @@ async def process_file_name(message: types.Message, state: FSMContext):
                     files_kb.add(InlineKeyboardButton(i['file_name'], callback_data="file="+i['file_id']))
             if len(files)>5:
                 files_kb.add(InlineKeyboardButton("Дальше >>", callback_data="next="+message.text+"="+str(5)))
-            await message.reply("Вот что нашел по твоему запросу", reply_markup=files_kb)
+            await message.reply(_("Вот что нашел по твоему запросу"), reply_markup=files_kb)
         else:
-            await message.reply("Ничего не нашел :(")
+            await message.reply(_("Ничего не нашел :("))
         await state.finish()
     else:
-        await message.reply("Отмена поиска.")
+        await message.reply(_("Отмена поиска."))
         await state.finish()
 
 async def on_startup(dp):
