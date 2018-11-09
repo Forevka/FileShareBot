@@ -33,8 +33,8 @@ WEBAPP_HOST = '0.0.0.0'  # or ip
 WEBAPP_PORT = 443
 
 # Configure logging
-logging.basicConfig(filename="log.log", level=logging.WARNING)
-#logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(filename="log.log", level=logging.WARNING)
+logging.basicConfig(level=logging.INFO)
 # Initialize bot and dispatcher
 loop = asyncio.get_event_loop()
 
@@ -74,14 +74,17 @@ async def send_start(message: types.Message):
 @dp.message_handler(commands=['find'])
 async def send_find(message: types.Message):
     file_name = message.text.split(" ", 1)[-1]
-    print(file_name)
+    #print(file_name)
     if file_name!="/find":
         if len(file_name)>=3:
             files = await loop.create_task(db.find_file_by_name(file_name));
             if len(files)>0:
                 files_kb = InlineKeyboardMarkup()
-                for i in files:
-                    files_kb.add(InlineKeyboardButton(i['file_name'], callback_data=i['file_id']))
+                for n, i in enumerate(files):
+                    if n<5:
+                        files_kb.add(InlineKeyboardButton(i['file_name'], callback_data="file="+i['file_id']))
+                if len(files)>5:
+                    files_kb.add(InlineKeyboardButton("Дальше >>", callback_data="next="+file_name+"="+str(5)))
                 await message.reply("Вот что нашел по твоему запросу", reply_markup=files_kb)
             else:
                 await message.reply("Ничего не нашел :(")
@@ -96,7 +99,7 @@ async def get_music(message: types.Message):
 
 @dp.message_handler(content_types=types.ContentType.DOCUMENT)
 async def get_document(message: types.Message):
-    print(message)
+    #print(message)
     err = await loop.create_task(db.insert_file_id(message.document.file_name, message.document.file_id, message.from_user.id))
     if err == 1:
         await message.reply("Окей, сохранил твой файл к себе в базу данных!")
@@ -104,16 +107,63 @@ async def get_document(message: types.Message):
 
 @dp.callback_query_handler()
 async def process_callback(callback_query: types.CallbackQuery):
-    file = await db.find_file_by_id(callback_query.data);
-    user_id = json.loads(str(callback_query.message.reply_to_message))['from']['id'];
-    owner = True if file['owner_id'] == user_id else False;
-    
-    try:
-        await bot.send_document(user_id, callback_query.data, parse_mode = "HTML",
-                                caption='<b>Файл:</b> '+file['file_name']+"\n<b>Дата загрузки:</b> "+datetime.strftime(file['create_date'], "%Y.%m.%d %H:%M:%S"))
-        await bot.answer_callback_query(callback_query.id, text = "Отправил файл тебе в лс")
-    except BotBlocked:
-        await bot.answer_callback_query(callback_query.id, text = "Не могу отправить тебе файл, напиши мне для начала чтоб я мог отправлять тебе файлы", show_alert = True)
+    print(callback_query)
+    if callback_query.data.find("file")>=0:
+        file = callback_query.data.split("=")[-1]
+        file = await db.find_file_by_id(file);
+        user_id = json.loads(str(callback_query.message.reply_to_message))['from']['id'];
+        owner = True if file['owner_id'] == user_id else False;
+        
+        try:
+            await bot.send_document(user_id, file['file_id'], parse_mode = "HTML",
+                                    caption='<b>Файл:</b> '+file['file_name']+"\n<b>Дата загрузки:</b> "+datetime.strftime(file['create_date'], "%Y.%m.%d %H:%M:%S"))
+            await bot.answer_callback_query(callback_query.id, text = "Отправил файл тебе в лс")
+        except BotBlocked:
+            await bot.answer_callback_query(callback_query.id, text = "Не могу отправить тебе файл, напиши мне для начала чтоб я мог отправлять тебе файлы", show_alert = True)
+    elif callback_query.data.find("next")>=0:
+        file_name = callback_query.data.split("=")[1];
+        offset = callback_query.data.split("=")[2];
+        
+        files = await loop.create_task(db.find_file_by_name(file_name, offset = int(offset)));
+        next_button = None;
+        prev_button = None;
+        if len(files)>0:
+            files_kb = InlineKeyboardMarkup()
+            for n, i in enumerate(files):
+                if n<5:
+                    files_kb.add(InlineKeyboardButton(i['file_name'], callback_data="file="+i['file_id']))
+            if len(files)>5:
+                next_button = InlineKeyboardButton("Дальше >>", callback_data="next="+file_name+"="+str(int(offset)+5))
+            prev_button = InlineKeyboardButton("<< Назад", callback_data="back="+file_name+"="+str(int(offset)-5))
+            if next_button!=None:
+                files_kb.row(prev_button, next_button)
+            else:
+                files_kb.row(prev_button)
+            await bot.edit_message_text(text = "Вот что нашел по твоему запросу", chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id, reply_markup=files_kb)#message.reply("Вот что нашел по твоему запросу", reply_markup=files_kb)
+    elif callback_query.data.find("back")>=0:
+        file_name = callback_query.data.split("=")[1];
+        offset = callback_query.data.split("=")[2];
+        
+        files = await loop.create_task(db.find_file_by_name(file_name, offset = int(offset)));
+        next_button = None;
+        prev_button = None;
+        if len(files)>0:
+            files_kb = InlineKeyboardMarkup()
+            for n, i in enumerate(files):
+                if n<5:
+                    files_kb.add(InlineKeyboardButton(i['file_name'], callback_data="file="+i['file_id']))
+            if len(files)>5:
+                next_button = InlineKeyboardButton("Дальше >>", callback_data="next="+file_name+"="+str(int(offset)+5))
+            if int(offset)>0:
+                prev_button = InlineKeyboardButton("<< Назад", callback_data="back="+file_name+"="+str(int(offset)-5))
+            
+            if prev_button!=None and next_button!=None:
+                files_kb.row(prev_button, next_button)
+            elif prev_button!=None:
+                files_kb.row(prev_button)
+            elif next_button!=None:
+                files_kb.row(next_button)
+            await bot.edit_message_text(text = "Вот что нашел по твоему запросу", chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id, reply_markup=files_kb)
 
 @dp.inline_handler()
 async def inline_send(inline_query: types.InlineQuery):
@@ -157,11 +207,14 @@ async def process_file_name(message: types.Message, state: FSMContext):
     """
     if message.text!="/cancel":
         files = await loop.create_task(db.find_file_by_name(message.text));
-        print(files)
+        #print(files)
         if len(files)>0:
             files_kb = InlineKeyboardMarkup()
-            for i in files:
-                files_kb.add(InlineKeyboardButton(i['file_name'], callback_data=i['file_id']))
+            for n, i in enumerate(files):
+                if n<5:
+                    files_kb.add(InlineKeyboardButton(i['file_name'], callback_data="file="+i['file_id']))
+            if len(files)>5:
+                files_kb.add(InlineKeyboardButton("Дальше >>", callback_data="next="+message.text+"="+str(5)))
             await message.reply("Вот что нашел по твоему запросу", reply_markup=files_kb)
         else:
             await message.reply("Ничего не нашел :(")
