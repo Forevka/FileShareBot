@@ -1,0 +1,431 @@
+WARNING:aiogram:Skipped 1 updates.
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=BadRequest("Bad request: can't parse inputmedia: can't parse media json object")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 62, in process_callback
+    await bot.edit_message_media(chat_id = callback_query.message.chat.id, media = callback_query.data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\bot.py", line 1490, in edit_message_media
+    result = await self.request(api.Methods.EDIT_MESSAGE_MEDIA, payload, files)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\base.py", line 112, in request
+    proxy=self.proxy, proxy_auth=self.proxy_auth, **kwargs)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\api.py", line 98, in make_request
+    return await check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\api.py", line 72, in check_result
+    exceptions.BadRequest.detect(description)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\utils\exceptions.py", line 117, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Bad request: can't parse inputmedia: can't parse media json object
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=BadRequest("Bad request: can't parse inputmedia: can't parse media json object")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 62, in process_callback
+    await bot.edit_message_media(chat_id = callback_query.message.chat.id, media = callback_query.data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\bot.py", line 1490, in edit_message_media
+    result = await self.request(api.Methods.EDIT_MESSAGE_MEDIA, payload, files)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\base.py", line 112, in request
+    proxy=self.proxy, proxy_auth=self.proxy_auth, **kwargs)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\api.py", line 98, in make_request
+    return await check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\api.py", line 72, in check_result
+    exceptions.BadRequest.detect(description)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\utils\exceptions.py", line 117, in detect
+    raise cls(description)
+aiogram.utils.exceptions.BadRequest: Bad request: can't parse inputmedia: can't parse media json object
+WARNING:aiogram:Skipped 1 updates.
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=TypeError("delete_message() missing 1 required positional argument: 'message_id'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 63, in process_callback
+    await bot.delete_message(callback_query.message.chat.id, )
+TypeError: delete_message() missing 1 required positional argument: 'message_id'
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'Bot' object has no attribute 'edit_message'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 62, in process_callback
+    await bot.edit_message(callback_query.message.chat.id, media = callback_query.data)
+AttributeError: 'Bot' object has no attribute 'edit_message'
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=CantTalkWithBots("Forbidden: bot can't send messages to bots")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 65, in process_callback
+    caption='Этот файл специально для тебя!')
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\bot.py", line 394, in send_document
+    result = await self.request(api.Methods.SEND_DOCUMENT, payload, files)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\base.py", line 112, in request
+    proxy=self.proxy, proxy_auth=self.proxy_auth, **kwargs)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\api.py", line 98, in make_request
+    return await check_result(method, response.content_type, response.status, await response.text())
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\bot\api.py", line 78, in check_result
+    exceptions.Unauthorized.detect(description)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\utils\exceptions.py", line 116, in detect
+    raise err(cls.text or description)
+aiogram.utils.exceptions.CantTalkWithBots: Forbidden: bot can't send messages to bots
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'CallbackQuery' object has no attribute 'reply_to_message'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 64, in process_callback
+    await bot.send_document(callback_query.reply_to_message.chat.id, callback_query.data,
+AttributeError: 'CallbackQuery' object has no attribute 'reply_to_message'
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'CallbackQuery' object has no attribute 'reply_to_message'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 67, in process_callback
+    await bot.send_document(callback_query.reply_to_message.chat.id, callback_query.data,
+AttributeError: 'CallbackQuery' object has no attribute 'reply_to_message'
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'CallbackQuery' object has no attribute 'reply_to_message'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 67, in process_callback
+    await bot.send_document(callback_query.reply_to_message.chat.id, callback_query.data,
+AttributeError: 'CallbackQuery' object has no attribute 'reply_to_message'
+WARNING:aiogram:Skipped 1 updates.
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'CallbackQuery' object has no attribute 'reply_to_message'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 63, in process_callback
+    print(callback_query.reply_to_message)
+AttributeError: 'CallbackQuery' object has no attribute 'reply_to_message'
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'CallbackQuery' object has no attribute 'reply_to_message'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 67, in process_callback
+    await bot.send_document(callback_query.reply_to_message.chat.id, callback_query.data,
+AttributeError: 'CallbackQuery' object has no attribute 'reply_to_message'
+WARNING:aiogram:Skipped 1 updates.
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'CallbackQuery' object has no attribute 'reply_to_message'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 67, in process_callback
+    await bot.send_document(callback_query.reply_to_message.chat.id, callback_query.data,
+AttributeError: 'CallbackQuery' object has no attribute 'reply_to_message'
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=SyntaxError('invalid syntax', ('<string>', 1, 55, 'new_fuck = callback_query.message.reply_to_message.from.id\n'))>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 68, in process_callback
+    exec("new_fuck = callback_query.message.reply_to_message.from.id")
+  File "<string>", line 1
+    new_fuck = callback_query.message.reply_to_message.from.id
+                                                          ^
+SyntaxError: invalid syntax
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'Message' object has no attribute 'from_'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 69, in process_callback
+    await bot.send_document(callback_query.message.reply_to_message.from_.id, callback_query.data,
+AttributeError: 'Message' object has no attribute 'from_'
+WARNING:aiogram:Goodbye!
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'Message' object has no attribute 'from_'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 69, in process_callback
+    await bot.send_document(callback_query.message.reply_to_message.from_.id, callback_query.data,
+AttributeError: 'Message' object has no attribute 'from_'
+WARNING:aiogram:Skipped 1 updates.
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'Message' object has no attribute 'from_'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 69, in process_callback
+    await bot.send_document(callback_query.message.reply_to_message.from_.id, callback_query.data,
+AttributeError: 'Message' object has no attribute 'from_'
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'Message' object has no attribute 'from_'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 72, in process_callback
+    await bot.send_document(callback_query.message.reply_to_message.from_.id, callback_query.data,
+AttributeError: 'Message' object has no attribute 'from_'
+WARNING:aiogram:Skipped 1 updates.
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'Message' object has no attribute 'from_'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 72, in process_callback
+    await bot.send_document(callback_query.message.reply_to_message.from_.id, callback_query.data,
+AttributeError: 'Message' object has no attribute 'from_'
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=TypeError('the JSON object must be str, bytes or bytearray, not Message')>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 72, in process_callback
+    await bot.send_document(json.loads(callback_query.message.reply_to_message)['from']['id'], callback_query.data,
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\json\__init__.py", line 341, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+TypeError: the JSON object must be str, bytes or bytearray, not Message
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=TypeError('the JSON object must be str, bytes or bytearray, not Message')>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 72, in process_callback
+    fu = json.loads(callback_query.message.reply_to_message)['from']['id'];
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\json\__init__.py", line 341, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+TypeError: the JSON object must be str, bytes or bytearray, not Message
+WARNING:aiogram:Skipped 1 updates.
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=TypeError("'coroutine' object is not subscriptable")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 70, in process_callback
+    caption='<b>Файл:</b> '+file['file_name']+"\n<b>Дата загрузки:</b> "+file['create_date'])
+TypeError: 'coroutine' object is not subscriptable
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=TypeError('list indices must be integers or slices, not str')>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 70, in process_callback
+    caption='<b>Файл:</b> '+file['file_name']+"\n<b>Дата загрузки:</b> "+file['create_date'])
+TypeError: list indices must be integers or slices, not str
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=TypeError('list indices must be integers or slices, not str')>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 70, in process_callback
+    caption='<b>Файл:</b> '+file['file_name']+"\n<b>Дата загрузки:</b> "+file['create_date'])
+TypeError: list indices must be integers or slices, not str
+WARNING:aiogram:Skipped 1 updates.
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=AttributeError("'list' object has no attribute 'file_name'")>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 70, in process_callback
+    caption='<b>Файл:</b> '+file.file_name+"\n<b>Дата загрузки:</b> "+file.create_date)
+AttributeError: 'list' object has no attribute 'file_name'
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py:265> exception=TypeError('can only concatenate str (not "datetime.datetime") to str')>
+Traceback (most recent call last):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 273, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 147, in process_updates
+    return await asyncio.gather(*tasks)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 189, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+  File "C:\Users\starf.FOREVKA\AppData\Local\Programs\Python\Python37-32\lib\site-packages\aiogram\dispatcher\handler.py", line 99, in notify
+    response = await handler(*args, **partial_data)
+  File "bot.py", line 70, in process_callback
+    caption='<b>Файл:</b> '+file['file_name']+"\n<b>Дата загрузки:</b> "+file['create_date'])
+TypeError: can only concatenate str (not "datetime.datetime") to str
+WARNING:aiogram:Skipped 1 updates.
