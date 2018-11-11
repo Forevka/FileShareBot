@@ -51,8 +51,14 @@ async def delete_file_by_id(file_id, user_id):
     conn = await asyncpg.connect(user='postgres', password='werdwerd',
                                  database='files_new', host='194.67.205.185')
     values = await conn.execute("""DELETE FROM all_files WHERE (file_id = '{}' AND owner_id = {}) """.format(file_id, user_id))
-    await conn.close()
-    return values.split(" ")[-1];
+    
+    if values.split(" ")[-1]=='0':
+        await conn.close()
+        return 0; #nothing deleted
+    else:
+        await conn.execute("""UPDATE users SET files_count = files_count - 1 WHERE user_id = {}""".format(user_id))
+        await conn.close()
+        return 1; #deleted file
 
 async def insert_file_all(file_name, file_id, owner_id, timestamp):
     conn = await asyncpg.connect(user='postgres', password='werdwerd',
@@ -73,7 +79,7 @@ async def insert_user(user_id, user_name, user_lang):
 async def find_user(user_id):
     conn = await asyncpg.connect(user='postgres', password='werdwerd',
                                  database='files_new', host='194.67.205.185')
-    values = await conn.fetch("SELECT user_name, user_id, user_lang FROM users WHERE user_id = '{}'".format(user_id))
+    values = await conn.fetch("SELECT user_name, user_id, user_lang, files_count FROM users WHERE user_id = '{}'".format(user_id))
     await conn.close()
     if len(values)==1:
         return values[0];

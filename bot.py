@@ -132,7 +132,7 @@ async def get_document(message: types.Message):
     user_locale = message.from_user.locale
     
     file_kb = InlineKeyboardMarkup()
-    file_kb.add(InlineKeyboardButton("Файл виден всем "+"✅", callback_data="private="+i['file_id']))
+    file_kb.add(InlineKeyboardButton(_("Управление файлом"), callback_data="file="+message.document.file_id))
     user_exist = await db.find_user(user_id)
     if user_exist==None:
         await db.insert_user(user_id, user_name if user_name!=None else "None", user_locale)
@@ -158,7 +158,6 @@ async def process_callback(callback_query: types.CallbackQuery):
             if owner:
                 do_kb.add(InlineKeyboardButton("Файл виден всем "+("✅" if file['private']==False else "❌"), callback_data="private="+file['file_id']))
                 do_kb.add(InlineKeyboardButton("Удалить файл", callback_data="delete="+file['file_id']))
-            
             try:
                 await bot.send_document(user_id, file['file_id'], parse_mode = "HTML", reply_markup = do_kb,
                                         caption=_('Вот твой файл\n\n<b>Файл:</b>{file_name}\n<b>Дата загрузки:</b>{file_time}').format(file_name = file['file_name'], file_time = datetime.strftime(file['create_date'], "%Y.%m.%d %H:%M:%S")))
@@ -193,11 +192,10 @@ async def process_callback(callback_query: types.CallbackQuery):
         
         err = await loop.create_task(db.delete_file_by_id(file_id, user_id));
         print(err)
-        if err=="0":
+        if err==0:
             await bot.answer_callback_query(callback_query.id, text = _("Файл либо уже удален, либо вы не являетесь владельцем файла"), show_alert = True)
         else:
             await bot.edit_message_caption(caption = _("Файл удален"), chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id)
-            await bot.edit_message_media(chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id, media = [])
         #print(file_id)
     elif callback_query.data.find("page")>=0:
         number = callback_query.data.split("=")[-1];
