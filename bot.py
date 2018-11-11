@@ -5,6 +5,7 @@ import pprint
 import db
 import ssl
 import sys
+from math import floor
 from os import _exit
 
 from pathlib import Path
@@ -111,7 +112,7 @@ async def send_find(message: types.Message):
                     if n<5:
                         files_kb.add(InlineKeyboardButton(i['file_name'], callback_data="file="+i['file_id']))
                 if len(files)>5:
-                    files_kb.add(InlineKeyboardButton(_("Дальше >>"), callback_data="next_all="+file_name+"="+str(5)))
+                    files_kb.row(InlineKeyboardButton("1", callback_data="page=1"),InlineKeyboardButton(_("Дальше >>"), callback_data="next_all="+file_name+"="+str(5)))
                 await message.reply(_("Документы"), reply_markup=files_kb)
             else:
                 await message.reply(_("Ничего не нашел :("))
@@ -198,6 +199,10 @@ async def process_callback(callback_query: types.CallbackQuery):
             await bot.edit_message_caption(caption = _("Файл удален"), chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id)
             await bot.edit_message_media(chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id, media = [])
         #print(file_id)
+    elif callback_query.data.find("page")>=0:
+        number = callback_query.data.split("=")[-1];
+        
+        await bot.answer_callback_query(callback_query.id, text = _("Страница номер "+number))
     elif callback_query.data.find("next")>=0:
         file_name = callback_query.data.split("=")[1];
         offset = callback_query.data.split("=")[2];
@@ -213,6 +218,8 @@ async def process_callback(callback_query: types.CallbackQuery):
             
         next_button = None;
         prev_button = None;
+        number = str(floor(int(offset)/5)+1)
+        number_button = InlineKeyboardButton(number, callback_data="page="+number)
         if len(files)>0:
             files_kb = InlineKeyboardMarkup()
             for n, i in enumerate(files):
@@ -222,9 +229,9 @@ async def process_callback(callback_query: types.CallbackQuery):
                 next_button = InlineKeyboardButton(_("Дальше >>"), callback_data="next_"+file_category+"="+file_name+"="+str(int(offset)+5))
             prev_button = InlineKeyboardButton(_("<< Назад"), callback_data="back_"+file_category+"="+file_name+"="+str(int(offset)-5))
             if next_button!=None:
-                files_kb.row(prev_button, next_button)
+                files_kb.row(prev_button, number_button,next_button)
             else:
-                files_kb.row(prev_button)
+                files_kb.row(prev_button, number_button)
             await bot.edit_message_text(text = _("Документы"), chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id, reply_markup=files_kb)#message.reply("Вот что нашел по твоему запросу", reply_markup=files_kb)
     elif callback_query.data.find("back")>=0:
         file_name = callback_query.data.split("=")[1];
@@ -239,6 +246,8 @@ async def process_callback(callback_query: types.CallbackQuery):
         
         next_button = None;
         prev_button = None;
+        number = str(floor(int(offset)/5)+1)
+        number_button = InlineKeyboardButton(number, callback_data="page="+number)
         if len(files)>0:
             files_kb = InlineKeyboardMarkup()
             for n, i in enumerate(files):
@@ -250,11 +259,11 @@ async def process_callback(callback_query: types.CallbackQuery):
                 prev_button = InlineKeyboardButton(_("<< Назад"), callback_data="back_"+file_category+"="+file_name+"="+str(int(offset)-5))
             
             if prev_button!=None and next_button!=None:
-                files_kb.row(prev_button, next_button)
+                files_kb.row(prev_button,number_button, next_button)
             elif prev_button!=None:
-                files_kb.row(prev_button)
+                files_kb.row(prev_button, number_button)
             elif next_button!=None:
-                files_kb.row(next_button)
+                files_kb.row(number_button, next_button)
             await bot.edit_message_text(text = _("Документы"), chat_id = callback_query.message.chat.id, message_id = callback_query.message.message_id, reply_markup=files_kb)
 
 @dp.inline_handler()
@@ -312,7 +321,7 @@ async def send_user_files(message: types.Message):
             if n<5:
                 files_kb.add(InlineKeyboardButton(i['file_name'], callback_data="file="+i['file_id']))
         if len(files)>5:
-            files_kb.add(InlineKeyboardButton(_("Дальше >>"), callback_data="next_my="+file_name+"="+str(5)))
+            files_kb.row(InlineKeyboardButton("1", callback_data="page=1"), InlineKeyboardButton(_("Дальше >>"), callback_data="next_my="+file_name+"="+str(5)))
         await message.reply(_("Документы"), reply_markup=files_kb)
     else:
         await message.reply(_("У тебя нету файлов, отправь любой файл мне и я сохраню его"), reply_markup=greet_kb)
@@ -331,7 +340,7 @@ async def process_file_name(message: types.Message, state: FSMContext):
                 if n<5:
                     files_kb.add(InlineKeyboardButton(i['file_name'], callback_data="file="+i['file_id']))
             if len(files)>5:
-                files_kb.add(InlineKeyboardButton("Дальше >>", callback_data="next_all="+message.text+"="+str(5)))
+                files_kb.row(InlineKeyboardButton("1", callback_data="page=1"),InlineKeyboardButton("Дальше >>", callback_data="next_all="+message.text+"="+str(5)))
             await message.reply(_("Документы"), reply_markup=files_kb)
         else:
             await message.reply(_("Ничего не нашел :("))
